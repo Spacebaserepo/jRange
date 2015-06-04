@@ -63,6 +63,7 @@
 			this.bar           = $('.selected-bar', this.domNode);
 			this.clickableBar  = this.domNode.find('.clickable-dummy');
 			this.interval      = this.options.to - this.options.from;
+			this.dragging      = false;
 			this.render();
 		},
 		render: function() {
@@ -106,6 +107,7 @@
 			if ( this.options.disable || (e.type === 'mousedown' && e.which !== 1)) {
 				return;
 			}
+			this.dragging = true;
 			e.stopPropagation();
 			e.preventDefault();
 			var pointer = $(e.target);
@@ -129,6 +131,7 @@
 			this.domNode.trigger('change', [this, pointer, position]);
 		},
 		onDragEnd: function(e) {
+			this.dragging = false;
 			this.pointers.removeClass('focused');
 			this.labels.removeClass('focused');
 			$(document).off('.slider');
